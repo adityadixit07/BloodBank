@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
       },
     },
 
-    hostpitalName: {
+    hospitalName: {
       type: String,
       required: function () {
         if (this.role === "hospital") {
