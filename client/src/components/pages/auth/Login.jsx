@@ -11,9 +11,9 @@ const Login = () => {
         />
       </div>
       <div className="content mt-10 ">
-        <form action="" className="flex items-center flex-col">
+        <div  className="flex items-center flex-col">
           <Form formTitle={"Login"} submitBtn={"Login"} formType="login" />
-        </form>
+        </div>
       </div>
     </div>
   );

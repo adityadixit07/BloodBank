@@ -1,5 +1,7 @@
 import { useState } from "react";
 import InputType from "./InputType";
+import { Link } from "react-router-dom";
+import { handleLogin, handleRegister } from "../../../services/authService";
 
 const Form = ({ formType, formTitle, submitBtn }) => {
   const [email, setEmail] = useState("");
@@ -13,7 +15,26 @@ const Form = ({ formType, formTitle, submitBtn }) => {
   const [phone, setPhone] = useState("");
   return (
     <div className="mb-10">
-      <form className="flex items-center flex-col">
+      <form
+        className="flex items-center flex-col"
+        onSubmit={(e) => {
+          if (formType === "login")
+            return handleLogin(e, email, password, role);
+          else if (formType === "register")
+            return handleRegister(
+              e,
+              email,
+              password,
+              role,
+              name,
+              organisationName,
+              hospitalName,
+              website,
+              address,
+              phone
+            );
+        }}
+      >
         <h1 className="text-3xl text-gray-600 font-mono  mb-4">{formTitle}</h1>
 
         {/* role buttons*/}
@@ -26,7 +47,7 @@ const Form = ({ formType, formTitle, submitBtn }) => {
               id="donarRadio"
               value={"donar"}
               onChange={(e) => setRole(e.target.value)}
-              defaultChecked
+              checked={role === "donar"}
             />
             <label htmlFor="donarRadio" className="ml-2 text-gray-700">
               Donar
@@ -53,7 +74,6 @@ const Form = ({ formType, formTitle, submitBtn }) => {
               id="organisationRadio"
               value={"organisation"}
               onChange={(e) => setRole(e.target.value)}
-              defaultChecked
             />
             <label htmlFor="organisationRadio" className="ml-2 text-gray-700">
               Organization
@@ -67,7 +87,6 @@ const Form = ({ formType, formTitle, submitBtn }) => {
               id="hospitalRadio"
               value={"hospital"}
               onChange={(e) => setRole(e.target.value)}
-              defaultChecked
             />
             <label htmlFor="hospitalRadio" className="ml-2 text-gray-700">
               Hospital
@@ -191,6 +210,24 @@ const Form = ({ formType, formTitle, submitBtn }) => {
         })()}
 
         <div className="form-group w-full submit-btn">
+          <div className="mb-3">
+            {formType === "login" ? (
+              <p>
+                Not Registered Yet?
+                <Link to="/register" className="text-blue-500 underline">
+                  {" "}
+                  Register
+                </Link>
+              </p>
+            ) : (
+              <p>
+                Already registered, Please{" "}
+                <Link to="/login" className="text-blue-500 underline">
+                  Login
+                </Link>
+              </p>
+            )}
+          </div>
           <button
             className="bg-orange-400 w-full p-2 text-2xl font-medium border-none rounded-sm"
             type="submit"

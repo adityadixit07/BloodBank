@@ -11,9 +11,9 @@ const Register = () => {
         />
       </div>
       <div className="content mt-5 ">
-        <form action="" className="flex items-center flex-col">
-          <Form formTitle="Register" submitBtn="Register" formType='register' />
-        </form>
+        <div action="" className="flex items-center flex-col">
+          <Form formTitle="Register" submitBtn="Register" formType="register" />
+        </div>
       </div>
     </div>
   );
