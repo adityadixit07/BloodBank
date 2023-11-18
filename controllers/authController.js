@@ -16,7 +16,7 @@ const registerController = async (req, res) => {
     req.body.password = hashedPassword;
     // creating a new user
     const user = new userModel(req.body); //ye body me jo bhi data aaya hai usko userModel me dal dega
-    await user.save(); //ye save kr dega
+    await user.save();
     return res.status(201).send({
       user,
       success: true,
@@ -78,13 +78,13 @@ const currentUserController = async (req, res) => {
   try {
     const user = await userModel
       .findOne({ _id: req.body.userId })
-      .select("-password");
+      // .select("-password");
     if (!user) {
       return res.status(404).send({ status: false, message: "User not found" });
     }
     return res
       .status(200)
-      .send({ user, status: true, message: "User found successfully" });
+      .send({  success: true, message: "User found successfully" ,user});
   } catch (error) {
     console.log(error);
     res

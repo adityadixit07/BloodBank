@@ -3,6 +3,7 @@ import InputType from "./InputType";
 import { Link } from "react-router-dom";
 import { handleLogin, handleRegister } from "../../../services/authService";
 
+// eslint-disable-next-line
 const Form = ({ formType, formTitle, submitBtn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +36,7 @@ const Form = ({ formType, formTitle, submitBtn }) => {
             );
         }}
       >
-        <h1 className="text-3xl text-gray-600 font-mono  mb-4">{formTitle}</h1>
+        <h1 className="text-3xl text-gray-600 font-mono  mb-4 ">{formTitle}</h1>
 
         {/* role buttons*/}
         <div className="radiobuttons flex gap-3 items-center">
