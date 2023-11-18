@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import Form from "../../shared/form/Form";
+import Spinner from "../../../assets/Spinner";
 
 const Register = () => {
   const { loading, error } = useSelector((state) => state.auth);
@@ -7,7 +8,8 @@ const Register = () => {
     <>
       {error && <span className="text-red-500">{alert(error)} </span>}
       {loading ? (
-        <div>loading..........</div>
+        // <div>loading..........</div>
+        <Spinner/>
       ) : (
         <div className="flex justify-center flex-col items-center mt-10">
           <div className="logo mt-6">

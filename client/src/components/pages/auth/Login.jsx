@@ -1,13 +1,18 @@
 import { useSelector } from "react-redux";
 import Form from "../../shared/form/Form";
+import Spinner from "../../../assets/Spinner";
+import { toast } from "react-toastify";
 const Login = () => {
   const { loading, error } = useSelector((state) => state.auth);
-  
+
   return (
     <>
-      {error && <span className="text-red-500">{alert(error)} </span>}
+      {error && <span className="text-red-500"> {toast.error(error)} </span>}
       {loading ? (
-        <div className="flex justify-center items-center text-4xl">loading..........</div>
+        // <div className="flex justify-center items-center text-4xl text-center">
+        //   Loading..........
+        // </div>
+        <Spinner/>
       ) : (
         <div className="flex justify-center flex-col items-center mt-10">
           <div className="logo mt-6">

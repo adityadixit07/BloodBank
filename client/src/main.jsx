@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <BrowserRouter>
         <App />
-        <ToastContainer limit={3} autoClose={2000} />
+        <ToastContainer limit={1} autoClose={1500} />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
