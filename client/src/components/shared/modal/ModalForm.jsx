@@ -3,6 +3,8 @@ import { IoAddOutline } from "react-icons/io5";
 import Modal from "./Modal";
 import { useSelector } from "react-redux";
 import InputType from "../form/InputType";
+import { toast } from "react-toastify";
+import API from "../../../services/API";
 
 const ModalForm = () => {
   const [inventoryType, setInventoryType] = useState("in");
@@ -11,6 +13,31 @@ const ModalForm = () => {
   const [email, setEmail] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const modalSubmit = async () => {
+    try {
+      if (!bloodGroup || !quantity) {
+        return toast.error("Please fill all the fields");
+      }
+      const { data } = await API.post("/inventory/create-inventory", {
+        email: user?.email,
+        bloodGroup,
+        quantity,
+        inventoryType,
+        organisation: user?._id,
+      });
+      if (data?.success) {
+        toast.success(data?.message);
+        // setIsModalOpen(false);
+        // window.location.reload();
+      }
+    } catch (error) {
+      window.location.reload();
+      toast.error(error?.response?.data?.message);
+      // console.log(error);
+    }
+  };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -21,7 +48,7 @@ const ModalForm = () => {
   return (
     <div className="flex mt-4">
       <button
-        className="flex  items-center gap-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="flex  items-center gap-3 bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={openModal}
       >
         <IoAddOutline /> Add Inventory
@@ -62,7 +89,10 @@ const ModalForm = () => {
             </div>
           </div>
           <hr />
-          <select onChange={(e) => setBloodGroup(e.target.value)}>
+          <select
+            onChange={(e) => setBloodGroup(e.target.value)}
+            className="mt-4 w-[100%] p-3 rounded-lg bg-gray-100"
+          >
             <option defaultValue={"open to select blood group"}>
               Open to select blood group
             </option>
@@ -75,24 +105,26 @@ const ModalForm = () => {
             <option value="O+">O+</option>
             <option value="O-">O-</option>
           </select>
-          <InputType
-            inpuType={"email"}
-            labelFor={"email"}
-            labelText={"Email"}
-            name={email}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={"Enter Email"}
-          />
-          <InputType
-            inpuType={"number"}
-            labelFor={"quantity"}
-            labelText={"Quantity"}
-            name={quantity}
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            placeholder={"Enter Quantity"}
-          />
+          <div className="mt-3">
+            <InputType
+              inpuType={"email"}
+              labelFor={"email"}
+              labelText={"Donar Email"}
+              name={email}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={"Enter Email"}
+            />
+            <InputType
+              inpuType={"number"}
+              labelFor={"quantity"}
+              labelText={"Quantity"}
+              name={quantity}
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder={"Enter Quantity"}
+            />
+          </div>
         </div>
         <div className="flex justify-end items-center gap-3">
           <button
@@ -103,7 +135,8 @@ const ModalForm = () => {
           </button>
           <button
             type="submit"
-            className="text-white font-semibold bg-gray-800 pr-6 pl-6 pb-2 pt-2 rounded-sm"
+            className="text-white font-semibold bg-blue-700 pr-6 pl-6 pb-2 pt-2 rounded-sm"
+            onClick={modalSubmit}
           >
             Submit
           </button>

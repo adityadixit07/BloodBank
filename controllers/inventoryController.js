@@ -4,7 +4,7 @@ const userModel = require("../models/userModel");
 // create a blood record
 const createInventoryController = async (req, res) => {
   try {
-    const { email, inventoryType } = req.body;
+    const { email } = req.body;
     const user = await userModel.findOne({ email });
     if (!user) {
       throw new Error("User not found");
@@ -12,9 +12,9 @@ const createInventoryController = async (req, res) => {
     // if (inventoryType === "in" && user.role !== "donar") {
     //   throw new Error("Not a donar account");
     // }
-    if (inventoryType === "out" && user.role !== "hospital") {
-      throw new Error("Not a Hospital account");
-    }
+    // if (inventoryType === "out" && user.role !== "hospital") {
+    //   throw new Error("Not a Hospital account");
+    // }
     const inventory = new inventoryModel(req.body);
     await inventory.save();
     return res.status(201).send({
@@ -26,7 +26,7 @@ const createInventoryController = async (req, res) => {
     console.log(error);
     res
       .status(500)
-      .send({ status: false, message: "failed to create inventory", error });
+      .send({ status: false, message: "Failed to create inventory", error });
   }
 };
 
