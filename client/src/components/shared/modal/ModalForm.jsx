@@ -10,7 +10,7 @@ const ModalForm = () => {
   const [inventoryType, setInventoryType] = useState("in");
   const [bloodGroup, setBloodGroup] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [email, setEmail] = useState("");
+  const [donarEmail, setDonarEmail] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,6 +21,7 @@ const ModalForm = () => {
       }
       const { data } = await API.post("/inventory/create-inventory", {
         email: user?.email,
+        donarEmail,
         bloodGroup,
         quantity,
         inventoryType,
@@ -28,16 +29,16 @@ const ModalForm = () => {
       });
       if (data?.success) {
         toast.success(data?.message);
-        // setIsModalOpen(false);
+        setIsModalOpen(false);
         // window.location.reload();
       }
     } catch (error) {
+      alert(error?.response?.data?.message);
+      // toast.error(error?.response?.data?.message);
       window.location.reload();
-      toast.error(error?.response?.data?.message);
       // console.log(error);
     }
   };
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -48,7 +49,7 @@ const ModalForm = () => {
   return (
     <div className="flex mt-4">
       <button
-        className="flex  items-center gap-3 bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="flex  items-center gap-3 bg-white text-green-800 font-bold py-2 px-4 rounded shadow-md"
         onClick={openModal}
       >
         <IoAddOutline /> Add Inventory
@@ -110,15 +111,15 @@ const ModalForm = () => {
               inpuType={"email"}
               labelFor={"email"}
               labelText={"Donar Email"}
-              name={email}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name={donarEmail}
+              value={donarEmail}
+              onChange={(e) => setDonarEmail(e.target.value)}
               placeholder={"Enter Email"}
             />
             <InputType
               inpuType={"number"}
               labelFor={"quantity"}
-              labelText={"Quantity"}
+              labelText={"Quantity (in ML)"}
               name={quantity}
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}

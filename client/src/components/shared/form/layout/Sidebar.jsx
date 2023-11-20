@@ -12,9 +12,16 @@ const Sidebar = () => {
             return (
               <div
                 className={`menu-item ${isActive && "active"} pt-10`}
-                key={menu}
+                key={menu.name}
               >
-                <Link to={menu.path} >{menu.name}</Link>
+                <Link
+                  to={menu.path}
+                  className={`${
+                    isActive ? "text-orange-700 text-xl font-semibold" : "text-xl font-semibold"
+                  } `}
+                >
+                  {menu.name}
+                </Link>
               </div>
             );
           })}
