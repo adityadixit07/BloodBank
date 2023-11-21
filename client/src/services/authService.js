@@ -53,6 +53,14 @@ export const handleLogin = (e, email, password, role) => {
     }
     // console.log(email, password, role);
     store.dispatch(userLogin({ email, password, role }));
+    // const res=store.dispatch(userLogin({ email, password, role }));
+    // console.log(userLogin.fulfilled.match(res));
+    // if(userLogin.fulfilled.match(res)){
+    //   toast.success(res.payload)
+    // }
+    // else if(userLogin.rejected.match(res)){
+    //   toast.error(res.payload);
+    // }
   } catch (error) {
     console.log(error);
   }

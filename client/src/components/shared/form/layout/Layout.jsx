@@ -7,11 +7,11 @@ const Layout = ({ children }) => {
         <div>
           <Header />
         </div>
-        <div className="flex">
-          <div className="w-1/4 bg-gray-100 p-16 h-[100vh]">
+        <div className="flex main-layout">
+          <div className=" sidebar w-1/4 bg-gray-100 p-10 h-[100vh]">
             <Sidebar />
           </div>
-          <div className="w-3/4 bg-white p-4">{children}</div>
+          <div className="childrens w-3/4 bg-white p-4">{children}</div>
         </div>
       </div>
     </>

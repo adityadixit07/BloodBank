@@ -11,7 +11,7 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <div className="bg-violet-100 flex justify-between p-3">
+    <div className="bg-violet-100 flex justify-between p-3 ">
       <div className="brand-name">
         <h1>BloodBank</h1>
       </div>

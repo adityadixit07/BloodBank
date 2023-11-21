@@ -17,7 +17,9 @@ const Sidebar = () => {
                 <Link
                   to={menu.path}
                   className={`${
-                    isActive ? "text-orange-700 text-xl font-semibold" : "text-xl font-semibold"
+                    isActive
+                      ? "text-orange-700 text-xl font-semibold"
+                      : "text-xl font-semibold"
                   } `}
                 >
                   {menu.name}

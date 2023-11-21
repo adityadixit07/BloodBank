@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoAddOutline } from "react-icons/io5";
 import Modal from "./Modal";
 import { useSelector } from "react-redux";
@@ -10,9 +10,16 @@ const ModalForm = () => {
   const [inventoryType, setInventoryType] = useState("in");
   const [bloodGroup, setBloodGroup] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [donarEmail, setDonarEmail] = useState("");
+  const [email, setEmail] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // setting the logged in user email as default email
+  useEffect(() => {
+    if (user && user.email) {
+      setEmail(user.email);
+    }
+  }, [user]);
 
   const modalSubmit = async () => {
     try {
@@ -20,8 +27,7 @@ const ModalForm = () => {
         return toast.error("Please fill all the fields");
       }
       const { data } = await API.post("/inventory/create-inventory", {
-        email: user?.email,
-        donarEmail,
+        email,
         bloodGroup,
         quantity,
         inventoryType,
@@ -111,9 +117,9 @@ const ModalForm = () => {
               inpuType={"email"}
               labelFor={"email"}
               labelText={"Donar Email"}
-              name={donarEmail}
-              value={donarEmail}
-              onChange={(e) => setDonarEmail(e.target.value)}
+              name={email}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder={"Enter Email"}
             />
             <InputType

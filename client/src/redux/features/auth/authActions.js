@@ -31,13 +31,8 @@ export const userRegister = createAsyncThunk(
         phone,
       });
       const { data } = response;
-      // ques: what does mean data?.success ??
-      // answer: it means if data is not null then it will check for data.success
       if (data?.success) {
         toast.success(data.message);
-        // setTimeout(() => {
-        //   window.location.replace("/login");
-        // })
         window.location.replace("/login");
       }
       return data;
@@ -87,6 +82,27 @@ export const getCurrentUser = createAsyncThunk(
       }
     } catch (error) {
       // console.log(error);
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+// getting donars
+export const getDonars = createAsyncThunk(
+  "/inventory/get-donars",
+  async ({ rejectWithValue }) => {
+    try {
+      const response = await API.get("/inventory/get-donars");
+      const { data } = response;
+      if (data?.success) {
+        console.log(data?.donars);
+        return data?.donars;
+      }
+    } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {

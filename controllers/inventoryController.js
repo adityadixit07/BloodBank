@@ -16,7 +16,6 @@ const createInventoryController = async (req, res) => {
     // if (inventoryType === "out" && user.role !== "hospital") {
     //   throw new Error("Not a Hospital account");
     // }
-
     if (req.body.inventoryType === "out") {
       const requestedBloodGroup = req.body.bloodGroup;
       const requestedQuantityofBlood = req.body.quantity;
@@ -63,7 +62,7 @@ const createInventoryController = async (req, res) => {
         // throw new Error("Not enough blood available");
         return res.status(500).send({
           success: false,
-          message: `Only ${totalAvailableQunatityofBloodGroup}ML of ${requestedBloodGroup.toUpperCase()} is available`,
+          message: `Unable to fulfill your request.Only ${totalAvailableQunatityofBloodGroup}ML of ${requestedBloodGroup.toUpperCase()} is available`,
         });
       }
       req.body.hospital = user?._id;
@@ -109,7 +108,53 @@ const getInventoryController = async (req, res) => {
   }
 };
 
+// Donar Records
+const getDonarRecords = async (req, res) => {
+  try {
+    const organisation = req.body.userId;
+    const donarId = await inventoryModel
+      .find({ organisation })
+      .distinct("donar");
+    // console.log(donarId);
+    const donars = await userModel.find({ _id: { $in: donarId } });
+    return res.status(200).send({
+      success: true,
+      message: "Donars Records fetched successfully",
+      donars,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      status: false,
+      message: "Unable to load Donar Records",
+      error,
+    });
+  }
+};
+
+const getHostpitalsRecords = async (req, res) => {
+  try {
+    const organisation = req.body.userId;
+    const hospitalId = await inventoryModel.distinct("hospital", {
+      organisation,
+    });
+    const hospitals = await userModel.find({ _id: { $in: hospitalId } });
+    return res.status(200).send({
+      success: true,
+      message: "Hospitals Records fetched successfully",
+      hospitals,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      status: false,
+      message: "Unable to load Hospitals Records",
+      error,
+    });
+  }
+};
+
 module.exports = {
   createInventoryController,
   getInventoryController,
+  getDonarRecords,
+  getHostpitalsRecords,
 };

@@ -67,6 +67,8 @@
     .submit-btn {
         max-width: 90%;
     }
+
+
 }
 
 @media(max-width:280px) {
@@ -81,8 +83,3 @@
         flex-wrap: wrap;
     }
 }
-
-
-
-
-
