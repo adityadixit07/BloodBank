@@ -6,41 +6,23 @@ import { useEffect, useState } from "react";
 import API from "../../services/API";
 import { toast } from "react-toastify";
 import moment from "moment";
-import { getBloodRecords } from "../../helper-apis/helperApi";
 const HomePage = () => {
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, user } = useSelector((state) => state.auth);
   const [recordData, setRecordData] = useState([]);
-  // const getBloodRecords = async () => {
-  //   try {
-  //     const { data } = await API.get("/inventory/get-inventory");
-  //     if (data?.success) {
-  //       setRecordData(data?.inventory);
-  //       // console.log(data);
-  //       // toast.success(data?.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error(error?.response?.data?.message);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getBloodRecords();
-  // }, []);
-
-  useEffect(() => {
-    const fetchBloodRecords = async () => {
-      try {
-        const records = await getBloodRecords();
-        if (records.length > 0) {
-          setRecordData(records);
-        } else {
-          toast.error("No records found !!");
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
+  const getBloodRecords = async () => {
+    try {
+      const { data } = await API.get("/inventory/get-inventory");
+      if (data?.success) {
+        setRecordData(data?.inventory);
+        // console.log(data);
+        // toast.success(data?.message);
       }
-    };
-
-    fetchBloodRecords();
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
+  };
+  useEffect(() => {
+    getBloodRecords();
   }, []);
 
   const colNames = [

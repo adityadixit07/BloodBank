@@ -53,7 +53,7 @@ const App = () => {
           }
         />{" "}
         <Route
-          path="/orgnaisation"
+          path="/organisation"
           element={
             <ProtectedRoute>
               <Organisation />

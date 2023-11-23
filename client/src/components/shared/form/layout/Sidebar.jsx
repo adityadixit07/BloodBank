@@ -1,13 +1,49 @@
 import { Link, useLocation } from "react-router-dom";
-import { userMenu } from "./userMenu";
+import { MdOutlineInventory } from "react-icons/md";
+import { BiSolidDonateHeart } from "react-icons/bi";
+import { FaRegHospital } from "react-icons/fa";
+import { VscOrganization } from "react-icons/vsc";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const { user } = useSelector((state) => state.auth);
   const location = useLocation();
   return (
     <div>
       <div className="sidebar">
-        <div className="menu pt-[50%]">
-          {userMenu.map((menu) => {
+        <div className="flex  flex-col justify-center pt-[90%] gap-10">
+          {user?.role === "organisation" && (
+            <>
+              <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+                <MdOutlineInventory size={30} color="green" />
+                <Link to="/" className="menu-item">
+                  Inventory
+                </Link>
+              </div>
+              <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+                <BiSolidDonateHeart size={30} color="green" />
+                <Link to="/donar" className="menu-item">
+                  Donar
+                </Link>
+              </div>
+              <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+                <FaRegHospital size={30} color="green" />
+                <Link to="/hospital" className="menu-item">
+                  Hospital
+                </Link>
+              </div>
+            </>
+          )}
+          {(user?.role === "donar" || user?.role === "hospital") && (
+            <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+              <VscOrganization size={30} color="green" />
+              <Link to="/organisation" className="menu-item">
+                Organisation
+              </Link>
+            </div>
+          )}
+
+          {/* {userMenu.map((menu) => {
             const isActive = location.pathname === menu.path;
             return (
               <div
@@ -26,7 +62,7 @@ const Sidebar = () => {
                 </Link>
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
     </div>

@@ -39,6 +39,21 @@ export const getHospitalsRecords = async () => {
       return data?.hospitals;
     }
   } catch (error) {
-    toast.error(error?.response?.data?.message);
+    return error?.response?.data?.message;
+    // toast.error(error?.response?.data?.message);
+  }
+};
+
+// get organisation records
+export const getOrganisationsRecords = async () => {
+  try {
+    const response = await API.get("/inventory/get-organisations");
+    const { data } = response;
+    if (data?.success) {
+      // toast.success(data?.message);
+      return data?.organisations;
+    }
+  } catch (error) {
+    return toast.error(error?.response?.data?.message);
   }
 };

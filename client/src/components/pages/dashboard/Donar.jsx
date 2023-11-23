@@ -1,47 +1,34 @@
 import { useEffect, useState } from "react";
 import Layout from "../../shared/form/layout/Layout";
-import API from "../../../services/API";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Spinner from "../../../assets/Spinner";
-import { getDonars } from "../../../helper-apis/helperApi";
+import API from "../../../services/API";
 
 const Donar = () => {
   const { loading } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
-  // const getDonars = async () => {
-  //   try {
-  //     const response = await API.get("/inventory/get-donars");
-  //     const { data } = response;
-  //     if (data?.success) {
-  //       setData(data?.donars);
-  //       // toast.success(data?.message);
-  //     }
-  //   } catch (error) {
-  //     // alert(error?.response?.data?.message);
-  //     toast.error(error?.response?.data?.message);
-  //     console.log(error);
-  //   }
-  // };
-  useEffect(() => {
-    const fetchDonarsRecords = async () => {
-      try {
-        const data = await getDonars();
-        if (data.length > 0) {
-          setData(data);
-        }
-      } catch (error) {
-        toast.error(error);
+  const getDonars = async () => {
+    try {
+      const response = await API.get("/inventory/get-donars");
+      const { data } = response;
+      if (data?.success) {
+        setData(data?.donars);
+        // toast.success(data?.message);
       }
-    };
-    fetchDonarsRecords();
-  }, []);
+    } catch (error) {
+      // alert(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
+      console.log(error);
+    }
+  };
   const colName = ["Name", "Email", "Phone", "Date & Time"];
   useEffect(() => {
     getDonars();
   }, []);
-  return (
+  // console.log(data);
+ return (
     <Layout>
       <h1 className="text-4xl text-center mt-0 mb-4">Donar Records</h1>
       {loading ? (
@@ -66,7 +53,7 @@ const Donar = () => {
             {data?.map((record) => (
               <tr key={record._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {record.name || record.organisationName + "(org)"}
+                  {record.name||record.organisationName+"(org)"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{record.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{record.phone}</td>

@@ -40,7 +40,6 @@ const Sidebar = ({ show, setter }) => {
         <div className={`${className}${appendClass} h-[100vh]`}>
           <div className="p-2 flex justify-center">
             <Link to="/">
-              {/*eslint-disable-next-line*/}
               <img
                 src="https://img-getpocket.cdn.mozilla.net/404x202/filters:format(jpeg):quality(60):no_upscale():strip_exif()/https%3A%2F%2Fs3.us-east-1.amazonaws.com%2Fpocket-curatedcorpusapi-prod-images%2Fdc4b3d65-25b0-4def-8a74-182815f04254.jpeg"
                 alt="Company Logo"

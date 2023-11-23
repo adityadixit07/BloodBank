@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
 import Layout from "../../shared/form/layout/Layout";
-import { getHospitalsRecords } from "../../../helper-apis/helperApi";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import Spinner from "../../../assets/Spinner";
+import API from "../../../services/API";
 
 const Hospital = () => {
   const { loading } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchHospitalsRecords = async () => {
-      try {
-        const records = await getHospitalsRecords();
-        if (records.length > 0) {
-          setData(records);
-        } else {
-          toast.error("No records found !!");
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
+  const hospitalsRecords = async () => {
+    try {
+      const { data } = await API.get("/inventory/get-hospitals");
+      if (data?.success) {
+        setData(data?.hospitals);
+        // toast.success(data?.message);
       }
-    };
-    fetchHospitalsRecords();
-  }, []);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
+  };
   // console.log(data);
+  useEffect(() => {
+    hospitalsRecords();
+  }, []);
   const colName = [
     "Name",
     "Email",
@@ -60,7 +59,7 @@ const Hospital = () => {
                 {data?.map((record) => (
                   <tr key={record._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {record.name || record.organisationName + "(org)"}
+                      {record.hospitalName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {record.email}
@@ -70,9 +69,6 @@ const Hospital = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {record.address}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {record.hospitalName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {moment(record.createdAt).format("DD/MM/YYYY, h:mm:ss a")}
