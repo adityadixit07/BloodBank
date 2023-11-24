@@ -76,15 +76,14 @@ const loginController = async (req, res) => {
 
 const currentUserController = async (req, res) => {
   try {
-    const user = await userModel
-      .findOne({ _id: req.body.userId })
-      // .select("-password");
+    const user = await userModel.findOne({ _id: req.body.userId });
+    // .select("-password");
     if (!user) {
       return res.status(404).send({ status: false, message: "User not found" });
     }
     return res
       .status(200)
-      .send({  success: true, message: "User found successfully" ,user});
+      .send({ success: true, message: "User found successfully", user });
   } catch (error) {
     console.log(error);
     res

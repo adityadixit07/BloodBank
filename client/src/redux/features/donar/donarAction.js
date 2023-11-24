@@ -1,15 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import API from "../../../services/API";
-
 export const getDonars = createAsyncThunk(
   "/inventory/get-donars",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await API.get("/inventory/get-donars");
       const { data } = response;
       if (data?.success) {
-        console.log(data?.donars);
-        return data?.donars;
+        // console.log(data?.donars);
+        return data;
       }
     } catch (error) {
       if (error.response && error.response.data.message) {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const Spinner = () => {
-  const [randomEmoji, setRandomEmoji] = useState("😊");
+  const [randomEmoji, setRandomEmoji] = useState("🚀");
   const emojis = ["😊", "🌟", "🚀", "🎉", "🔥", "💡", "🌀"];
 
   useEffect(() => {
