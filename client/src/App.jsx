@@ -8,6 +8,8 @@ import PublicRoutes from "./components/routes/PublicRoutes";
 import Donar from "./components/pages/dashboard/Donar";
 import Hospital from "./components/pages/dashboard/Hospital";
 import Organisation from "./components/pages/dashboard/Organisation";
+import Consumer from "./components/pages/dashboard/Consumer";
+import Donation from "./components/pages/dashboard/Donation";
 const App = () => {
   return (
     <div>
@@ -51,12 +53,28 @@ const App = () => {
               <Hospital />
             </ProtectedRoute>
           }
-        />{" "}
+        />
         <Route
           path="/organisation"
           element={
             <ProtectedRoute>
               <Organisation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/consumer"
+          element={
+            <ProtectedRoute>
+              <Consumer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/donation"
+          element={
+            <ProtectedRoute>
+              <Donation />
             </ProtectedRoute>
           }
         />

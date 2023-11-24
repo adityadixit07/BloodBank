@@ -6,6 +6,7 @@ const {
   getHostpitalsRecords,
   getOrganisationsRecords,
   getOrganisationsRecordsForHospital,
+  getInventoryHospitalController,
 } = require("../controllers/inventoryController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -18,6 +19,11 @@ router
 
 // get all blood records
 router.route("/get-inventory").get(authMiddleware, getInventoryController);
+
+// get hospital consumer record
+router
+  .route("/get-inventory-hospital")
+  .post(authMiddleware, getInventoryHospitalController);
 
 // donar records
 router.route("/get-donars").get(authMiddleware, getDonarRecords);

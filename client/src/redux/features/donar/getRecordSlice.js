@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getConsumerRecords,
   getDonars,
+  getDonationRecords,
   getHospitals,
   getInventoryRecords,
   getOrganisationRecords,
@@ -43,7 +45,7 @@ const donarSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getDonars.fulfilled, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.loading = false;
       state.record_data = action.payload.donars;
       state.message = action.payload.message;
@@ -79,6 +81,36 @@ const donarSlice = createSlice({
       state.message = action.payload.message;
     });
     builder.addCase(getOrganisationRecords.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // get consumer record for hospital
+    builder.addCase(getConsumerRecords.pending, (state) => {
+      state.error = null;
+      state.loading = true;
+    });
+    builder.addCase(getConsumerRecords.fulfilled, (state, action) => {
+      state.loading = false;
+      state.record_data = action.payload.inventory;
+      state.message = action.payload.message;
+    });
+    builder.addCase(getConsumerRecords.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // get donation record
+    builder.addCase(getDonationRecords.pending, (state) => {
+      state.error = null;
+      state.loading = true;
+    });
+    builder.addCase(getDonationRecords.fulfilled, (state, action) => {
+      state.loading = false;
+      state.record_data = action.payload.inventory;
+      state.message = action.payload.message;
+    });
+    builder.addCase(getDonationRecords.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

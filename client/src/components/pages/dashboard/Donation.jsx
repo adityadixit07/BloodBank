@@ -1,25 +1,30 @@
-import { useEffect } from "react";
-import Layout from "../../shared/form/layout/Layout";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../../assets/Spinner";
 import moment from "moment";
-import { getOrganisationRecords } from "../../../redux/features/donar/getRecordAction";
+import Layout from "../../shared/form/layout/Layout";
+import { getDonationRecords } from "../../../redux/features/donar/getRecordAction";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import Spinner from "../../../assets/Spinner";
 
-const Organisation = () => {
+const Donation = () => {
   const { user } = useSelector((state) => state.auth);
-  const userRole = user?.role;
   const { record_data, loading } = useSelector((state) => state.records);
   const dispatch = useDispatch();
+  const userId = user?._id;
   useEffect(() => {
-    if (userRole) {
-      dispatch(getOrganisationRecords(userRole));
-    }
-  }, [dispatch, userRole]);
+    dispatch(getDonationRecords(userId));
+  }, [dispatch, userId]);
 
-  const colName = ["Name", "Type", "Email", "Phone", "Address", "Date & Time"];
+  const colName = [
+    "Blood Group",
+    "Inventory",
+    "Quantity",
+    "Email",
+    "Date & Time",
+  ];
+
   return (
     <Layout>
-      <h1 className="text-4xl text-center mt-0 mb-4">Organisation Records</h1>
+      <h1 className="text-4xl text-center mt-0 mb-4">Donation Records</h1>
       {loading ? (
         <Spinner />
       ) : record_data.length === 0 ? (
@@ -42,16 +47,17 @@ const Organisation = () => {
             {record_data?.map((record) => (
               <tr key={record._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {record.organisationName}
+                  {record.bloodGroup}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{record.role}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {record.inventoryType}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {record.quantity}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{record.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{record.phone}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {record.address}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {moment(record.createdAt).format("DD/MM/YYYY, h:mm:ss a")}
+                  {moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}
                 </td>
               </tr>
             ))}
@@ -62,4 +68,4 @@ const Organisation = () => {
   );
 };
 
-export default Organisation;
+export default Donation;

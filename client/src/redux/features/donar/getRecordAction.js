@@ -84,3 +84,52 @@ export const getOrganisationRecords = createAsyncThunk(
     }
   }
 );
+
+// for hospital get consumer records
+export const getConsumerRecords = createAsyncThunk(
+  "/inventory/get-inventory-hospital",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/inventory/get-inventory-hospital", {
+        filters: {
+          inventoryType: "out",
+          hospital: userId,
+        },
+      });
+      const { data } = response;
+      if (data?.success) {
+        return data;
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const getDonationRecords = createAsyncThunk(
+  "/inventory/get-donation-record",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/inventory/get-inventory-hospital", {
+        filters: {
+          inventoryType: "in",
+          donar: userId,
+        },
+      });
+      const { data } = response;
+      if (data?.success) {
+        return data;
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

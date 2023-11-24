@@ -107,6 +107,30 @@ const getInventoryController = async (req, res) => {
   }
 };
 
+const getInventoryHospitalController = async (req, res) => {
+  try {
+    const inventory = await inventoryModel
+      .find(req.body.filters)
+      .populate("donar")
+      .populate("hospital")
+      .populate("organisation")
+      .sort({ createdAt: -1 });
+    return res.status(200).send({
+      success: true,
+      message: "hospital consumer record fetched successfully",
+      inventory,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        status: false,
+        message: "failed to get  hospital consumer record",
+        error,
+      });
+  }
+};
+
 // Donar Records
 // logged in user organisationrole hona chahiye
 const getDonarRecords = async (req, res) => {
@@ -202,4 +226,5 @@ module.exports = {
   getHostpitalsRecords,
   getOrganisationsRecords,
   getOrganisationsRecordsForHospital,
+  getInventoryHospitalController,
 };

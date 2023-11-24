@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { MdOutlineInventory } from "react-icons/md";
 import { BiSolidDonateHeart } from "react-icons/bi";
-import { FaRegHospital } from "react-icons/fa";
+import { FaCaretSquareDown, FaRegHospital } from "react-icons/fa";
 import { VscOrganization } from "react-icons/vsc";
 import { useSelector } from "react-redux";
 
@@ -42,7 +42,22 @@ const Sidebar = () => {
               </Link>
             </div>
           )}
-
+          {user?.role === "hospital" && (
+            <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+              <FaCaretSquareDown size={30} color="green" />
+              <Link to="/consumer" className="menu-item">
+                Consumer
+              </Link>
+            </div>
+          )}
+          {user?.role === "donar" && (
+            <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+              <FaCaretSquareDown size={30} color="green" />
+              <Link to="/donation" className="menu-item">
+                Donation
+              </Link>
+            </div>
+          )}
           {/* {userMenu.map((menu) => {
             const isActive = location.pathname === menu.path;
             return (
