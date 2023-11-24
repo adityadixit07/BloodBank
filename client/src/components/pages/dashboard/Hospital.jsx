@@ -2,28 +2,27 @@ import { useEffect, useState } from "react";
 import Layout from "../../shared/form/layout/Layout";
 import { toast } from "react-toastify";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../../assets/Spinner";
 import API from "../../../services/API";
+import { getHospitals } from "../../../redux/features/donar/getRecordAction";
+import { clearMessage } from "../../../redux/features/donar/getRecordSlice";
 
 const Hospital = () => {
-  const { loading } = useSelector((state) => state.auth);
-  const [data, setData] = useState([]);
-  const hospitalsRecords = async () => {
-    try {
-      const { data } = await API.get("/inventory/get-hospitals");
-      if (data?.success) {
-        setData(data?.hospitals);
-        // toast.success(data?.message);
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    }
-  };
-  // console.log(data);
+  const { record_data, message, loading } = useSelector(
+    (state) => state.records
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
-    hospitalsRecords();
-  }, []);
+    dispatch(getHospitals());
+  }, [dispatch]);
+  // useEffect(() => {
+  //   if (message) {
+  //     toast.success(message);
+  //     dispatch(clearMessage());
+  //   }
+  // });
+  // console.log(data);
   const colName = [
     "Name",
     "Email",
@@ -39,7 +38,7 @@ const Hospital = () => {
         <Spinner />
       ) : (
         <div>
-          {data?.length === 0 ? (
+          {record_data?.length === 0 ? (
             <h1 className="text-2xl text-center mt-10">No Entries Found </h1>
           ) : (
             <table className="mt-10 min-w-full divide-y divide-gray-200 shadow-md rounded-lg overflow-hidden">
@@ -56,7 +55,7 @@ const Hospital = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {data?.map((record) => (
+                {record_data?.map((record) => (
                   <tr key={record._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {record.hospitalName}

@@ -1,29 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../shared/form/layout/Layout";
 import Spinner from "../../assets/Spinner";
 import ModalForm from "../shared/modal/ModalForm";
-import { useEffect, useState } from "react";
-import API from "../../services/API";
-import { toast } from "react-toastify";
+import { useEffect } from "react";
 import moment from "moment";
+import { getInventoryRecords } from "../../redux/features/donar/getRecordAction";
 const HomePage = () => {
-  const { loading, error, user } = useSelector((state) => state.auth);
-  const [recordData, setRecordData] = useState([]);
-  const getBloodRecords = async () => {
-    try {
-      const { data } = await API.get("/inventory/get-inventory");
-      if (data?.success) {
-        setRecordData(data?.inventory);
-        // console.log(data);
-        // toast.success(data?.message);
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    }
-  };
+  const { record_data, loading, error } = useSelector((state) => state.records);
+  const dispatch = useDispatch();
   useEffect(() => {
-    getBloodRecords();
-  }, []);
+    dispatch(getInventoryRecords());
+  }, [dispatch]);
 
   const colNames = [
     "BloodGroup",
@@ -42,7 +29,7 @@ const HomePage = () => {
           <h1 className="text-4xl text-center mt-0  ">Welcome to BloodBank</h1>
           <hr />
           <ModalForm />
-          {recordData.length === 0 ? (
+          {record_data.length === 0 ? (
             <h1 className="text-2xl text-center mt-10">No Entries Found </h1>
           ) : (
             <table className="mt-10 min-w-full divide-y divide-gray-200 shadow-md rounded-lg overflow-hidden">
@@ -59,7 +46,7 @@ const HomePage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {recordData?.map((record) => (
+                {record_data?.map((record) => (
                   <tr key={record._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {record.bloodGroup}

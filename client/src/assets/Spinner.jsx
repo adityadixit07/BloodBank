@@ -19,7 +19,7 @@ const Spinner = () => {
           <div className="h-9 w-9 rounded-full bg-gray-200"></div>
         </div>
         <div className="flex items-center">
-          <h1 className="text-gray-700 font-medium animate-pulse text-3xl text-center">
+          <h1 className="text-gray-700 font-medium text-3xl text-center">
             Wait for a while..... {randomEmoji}
           </h1>
         </div>

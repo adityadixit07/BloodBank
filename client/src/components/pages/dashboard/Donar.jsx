@@ -5,45 +5,23 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../../assets/Spinner";
 import API from "../../../services/API";
-import { getDonars } from "../../../redux/features/donar/donarAction";
-import { clearMessage } from "../../../redux/features/donar/donarSlice";
+import { getDonars } from "../../../redux/features/donar/getRecordAction";
+import { clearMessage } from "../../../redux/features/donar/getRecordSlice";
 
 const Donar = () => {
-  // const { loading } = useSelector((state) => state.auth);
-  // const [data, setData] = useState([]);
-  // const getDonars = async () => {
-  //   try {
-  //     const response = await API.get("/inventory/get-donars");
-  //     const { data } = response;
-  //     if (data?.success) {
-  //       setData(data?.donars);
-  //       // toast.success(data?.message);
-  //     }
-  //   } catch (error) {
-  //     // alert(error?.response?.data?.message);
-  //     toast.error(error?.response?.data?.message);
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getDonars();
-  // }, []);
-  // console.log(data);
-
-  const { record_data, loading,message } = useSelector((state) => state.records);
+  const { record_data, loading, message } = useSelector(
+    (state) => state.records
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDonars());
   }, [dispatch]);
-  useEffect(()=>{
-    if(message){
-      toast.success(message);
-      dispatch(clearMessage())
-    }
-
-  },[message,dispatch])
-
+  // useEffect(() => {
+  //   if (message) {
+  //     toast.success(message);
+  //     dispatch(clearMessage());
+  //   }
+  // }, [message, dispatch]);
 
   const colName = ["Name", "Email", "Phone", "Date & Time"];
   return (
