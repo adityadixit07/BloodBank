@@ -24,7 +24,6 @@ const Consumer = () => {
 
   return (
     <Layout>
-      <h1 className="text-4xl text-center mt-0 mb-4">Consumer Records</h1>
       {loading ? (
         <Spinner />
       ) : record_data.length === 0 ? (
