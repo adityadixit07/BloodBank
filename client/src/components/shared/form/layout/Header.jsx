@@ -1,6 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
@@ -10,6 +10,7 @@ const Header = () => {
     toast.success("Logout Successfully");
     navigate("/login");
   };
+  const location = useLocation();
   return (
     <div className="bg-violet-100 flex justify-between p-3 ">
       <div className="brand-name">
@@ -25,6 +26,11 @@ const Header = () => {
           <span className="bg-gray-700 text-white p-2 rounded-md">
             {user?.role}
           </span>
+          {location.pathname === "/" ? (
+            <Link to={"/analytics"}>Analytics</Link>
+          ) : (
+            <Link to={"/"}>Home</Link>
+          )}
         </div>
         <div>
           <button
