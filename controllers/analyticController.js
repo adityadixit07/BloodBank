@@ -1,4 +1,4 @@
-import inventoryModel from "../models/inventoryModel";
+const inventoryModel = require("../models/inventoryModel");
 const mongoose = require("mongoose");
 
 export const bloodGroupDetails = async (req, res) => {
