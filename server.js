@@ -21,7 +21,7 @@ app.use("/api/v1/auth", require("./routes/authRoutes"));
 // inventory routes
 app.use("/api/v1/inventory", require("./routes/inventoryRoutes"));
 // analytics routes
-app.use('/api/v1/analytics',require('./routes/analyticRoutes'))
+app.use("/api/v1/analytics", require("./routes/analyticRoutes"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

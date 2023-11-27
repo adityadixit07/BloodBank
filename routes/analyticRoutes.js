@@ -1,8 +1,9 @@
-const express=require('express');
+const express = require("express");
 const authMiddleware = require("../middlewares/authMiddleware");
-const { bloodGroupDetails } = require('../controllers/analyticController');
+const { bloodGroupDetails } = require("../controllers/analyticController");
 
-const router=express.Router();
+const router = express.Router();
 
+router.route("/bloodgroup-data").get(authMiddleware, bloodGroupDetails);
 
-router.route('/bloodgroup-data').get(authMiddleware,bloodGroupDetails)
+module.exports = router;
