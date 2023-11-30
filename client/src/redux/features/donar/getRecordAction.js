@@ -133,3 +133,22 @@ export const getDonationRecords = createAsyncThunk(
     }
   }
 );
+
+// recent blood inventories
+export const getRecentInventory = createAsyncThunk(
+  "/api/inventory/get-recent-inventory",
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await API.get("/inventory/get-recent-inventory");
+      if (data?.success) {
+        return data;
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

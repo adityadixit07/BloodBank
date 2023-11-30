@@ -6,6 +6,7 @@ import {
   getHospitals,
   getInventoryRecords,
   getOrganisationRecords,
+  getRecentInventory,
 } from "./getRecordAction";
 
 const initialState = {
@@ -111,6 +112,21 @@ const donarSlice = createSlice({
       state.message = action.payload.message;
     });
     builder.addCase(getDonationRecords.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // get recent invetories-> blood transactions
+    builder.addCase(getRecentInventory.pending, (state) => {
+      state.error = null;
+      state.loading = true;
+    });
+    builder.addCase(getRecentInventory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.record_data = action.payload.recentInventories;
+      state.message = action.payload.message;
+    });
+    builder.addCase(getRecentInventory.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

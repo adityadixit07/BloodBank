@@ -2,17 +2,35 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBloodGroupData } from "../../../redux/features/analytics/analyticsAction";
 import Spinner from "../../../assets/Spinner";
+import { getRecentInventory } from "../../../redux/features/donar/getRecordAction";
+import Layout from "../../shared/form/layout/Layout";
+import moment from "moment";
 
 const Analytics = () => {
   const dispatch = useDispatch();
   const { analyticsData, loading } = useSelector((state) => state.analytics);
+  const { record_data } = useSelector((state) => state.records);
   useEffect(() => {
     dispatch(getBloodGroupData());
   }, [dispatch]);
   // console.log(analyticsData);
 
+  useEffect(() => {
+    dispatch(getRecentInventory());
+  }, [dispatch]);
+
+  // console.log(record_data);
+
+  const colNames = [
+    "Email",
+    "Blood Group",
+    "Inventory Type",
+    "Quantity",
+    "Date",
+  ];
+
   return (
-    <div className="mt-20">
+    <Layout className="mt-20">
       <h1 className="text-center  text-3xl text-gray-700 font-medium m-3">
         Analytics of Blood Group Data
       </h1>
@@ -43,9 +61,51 @@ const Analytics = () => {
               </p>
             </div>
           ))}
+
+          {/* recent transaction of blood data  */}
+          <div >
+            <div >
+              <h1 className="text-gray-900 text-2xl ">Recent Transactions</h1>
+            </div>
+            <table className="mt-10 min-w-full divide-y divide-gray-200 shadow-md rounded-lg overflow-hidden">
+              <thead className="bg-gray-50">
+                <tr>
+                  {colNames.map((columnName) => (
+                    <th
+                      key={columnName}
+                      className="px-6 py-3 text-left text-s font-semibold text-gray-800 uppercase tracking-wider"
+                    >
+                      {columnName}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {record_data?.map((record) => (
+                  <tr key={record._id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.bloodGroup}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.inventoryType}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {record.quantity}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {moment(record.createdAt).format("DD/MM/YYYY, hh:mm A")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
-    </div>
+    </Layout>
   );
 };
 

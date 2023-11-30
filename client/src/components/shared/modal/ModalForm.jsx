@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoAddOutline } from "react-icons/io5";
 import Modal from "./Modal";
 import { useSelector } from "react-redux";
@@ -13,13 +13,6 @@ const ModalForm = () => {
   const [email, setEmail] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // setting the logged in user email as default email
-  useEffect(() => {
-    if (user && user.email) {
-      setEmail(user.email);
-    }
-  }, [user]);
 
   const modalSubmit = async () => {
     try {
@@ -52,6 +45,7 @@ const ModalForm = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div className="flex mt-4">
       <button
@@ -120,7 +114,11 @@ const ModalForm = () => {
               name={email}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder={"Enter Email"}
+              placeholder={
+                inventoryType === "out"
+                  ? "Enter Reciever Email"
+                  : "Email must be of Donar Email"
+              }
             />
             <InputType
               inpuType={"number"}

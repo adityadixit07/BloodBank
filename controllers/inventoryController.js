@@ -121,13 +121,11 @@ const getInventoryHospitalController = async (req, res) => {
       inventory,
     });
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        status: false,
-        message: "failed to get  hospital consumer record",
-        error,
-      });
+    res.status(500).send({
+      status: false,
+      message: "failed to get  hospital consumer record",
+      error,
+    });
   }
 };
 
@@ -219,6 +217,29 @@ const getOrganisationsRecordsForHospital = async (req, res) => {
   }
 };
 
+// recent inventory
+const getRecentInventory = async (req, res) => {
+  try {
+    const recentInventories = await inventoryModel
+      .find({ organisation: req.body.userId })
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    // console.log(recentInventories);
+    return res.status(200).send({
+      success: true,
+      message: "Recent Inventory fetch successfully",
+      recentInventories,
+    });
+  } catch (error) {
+    res.json(500).send({
+      status: false,
+      message: "Error in fetching recent inventory",
+      error,
+    });
+  }
+};
+
 module.exports = {
   createInventoryController,
   getInventoryController,
@@ -227,4 +248,5 @@ module.exports = {
   getOrganisationsRecords,
   getOrganisationsRecordsForHospital,
   getInventoryHospitalController,
+  getRecentInventory,
 };
