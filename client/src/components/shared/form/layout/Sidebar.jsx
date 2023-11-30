@@ -58,6 +58,30 @@ const Sidebar = () => {
               </Link>
             </div>
           )}
+
+          {user?.role === "admin" && (
+            <>
+              <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+                <MdOutlineInventory size={30} color="green" />
+                <Link to="/donar-list" className="menu-item">
+                  Donars List
+                </Link>
+              </div>{" "}
+              <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+                <MdOutlineInventory size={30} color="green" />
+                <Link to="/hospital-list" className="menu-item">
+                  Hospitals List
+                </Link>
+              </div>
+              <div className="flex items-center gap-4 text-xl font-semibold text-emerald-900">
+                <MdOutlineInventory size={30} color="green" />
+                <Link to="/organisation-list" className="menu-item">
+                  Organisations List
+                </Link>
+              </div>
+            </>
+          )}
+
           {/* {userMenu.map((menu) => {
             const isActive = location.pathname === menu.path;
             return (

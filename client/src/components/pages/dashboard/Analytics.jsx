@@ -63,8 +63,8 @@ const Analytics = () => {
           ))}
 
           {/* recent transaction of blood data  */}
-          <div >
-            <div >
+          <div>
+            <div>
               <h1 className="text-gray-900 text-2xl ">Recent Transactions</h1>
             </div>
             <table className="mt-10 min-w-full divide-y divide-gray-200 shadow-md rounded-lg overflow-hidden">

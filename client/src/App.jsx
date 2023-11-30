@@ -11,6 +11,7 @@ import Organisation from "./components/pages/dashboard/Organisation";
 import Consumer from "./components/pages/dashboard/Consumer";
 import Donation from "./components/pages/dashboard/Donation";
 import Analytics from "./components/pages/dashboard/Analytics";
+import Admin from "./components/pages/admin/Admin";
 const App = () => {
   return (
     <div>
@@ -20,6 +21,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
             </ProtectedRoute>
           }
         />
