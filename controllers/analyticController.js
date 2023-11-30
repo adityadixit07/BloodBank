@@ -71,7 +71,29 @@ const bloodGroupDetails = async (req, res) => {
   }
 };
 
+// recent inventory
+const getRecentInventory = async (req, res) => {
+  try {
+    const organisation = new mongoose.Types.ObjectId(req.body.userId);
+    const recentInventory = await inventoryModel
+      .find({ organisation })
+      .sort({ createdAt: -1 })
+      .limit(10);
+    return res.status(200).json({
+      success: true,
+      message: "Recent Inventory fetch successfully",
+      recentInventory,
+    });
+  } catch (error) {
+    res.json(500).send({
+      status: false,
+      message: "Error in fetching recent inventory",
+      error,
+    });
+  }
+};
 
-module.exports={
-    bloodGroupDetails
-}
+module.exports = {
+  bloodGroupDetails,
+  getRecentInventory,
+};
