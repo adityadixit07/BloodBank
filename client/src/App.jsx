@@ -12,7 +12,11 @@ import Consumer from "./components/pages/dashboard/Consumer";
 import Donation from "./components/pages/dashboard/Donation";
 import Analytics from "./components/pages/dashboard/Analytics";
 import Admin from "./components/pages/admin/Admin";
+import DonarList from "./components/pages/admin/DonarList";
+import HospitalList from "./components/pages/admin/HospitalList";
+import OrganisationList from "./components/pages/admin/OrganisationList";
 const App = () => {
+
   return (
     <div>
       <Routes>
@@ -21,6 +25,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
             </ProtectedRoute>
           }
         />
@@ -93,6 +105,30 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Donation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/donar-list"
+          element={
+            <ProtectedRoute>
+              <DonarList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital-list"
+          element={
+            <ProtectedRoute>
+              <HospitalList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/organisation-list"
+          element={
+            <ProtectedRoute>
+              <OrganisationList />
             </ProtectedRoute>
           }
         />

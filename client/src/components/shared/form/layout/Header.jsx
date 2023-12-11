@@ -10,6 +10,7 @@ const Header = () => {
     toast.success("Logout Successfully");
     navigate("/login");
   };
+
   const location = useLocation();
   return (
     <div className="bg-violet-100 flex justify-between p-3 ">
@@ -26,10 +27,13 @@ const Header = () => {
           <span className="bg-gray-700 text-white p-2 rounded-md">
             {user?.role}
           </span>
-          {location.pathname === "/" ? (
+          {location.pathname === "/" ||
+          location.pathname === "/donar" ||
+          location.pathname === "/hospital" ? (
             <Link to={"/analytics"}>Analytics</Link>
           ) : (
             <Link to={"/"}>Home</Link>
+            // <Link to={`${user?.role==='admin'?navigate('/admin'):navigate('/')}`}>Home</Link>
           )}
         </div>
         <div>

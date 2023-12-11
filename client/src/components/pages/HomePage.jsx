@@ -5,11 +5,22 @@ import ModalForm from "../shared/modal/ModalForm";
 import { useEffect } from "react";
 import moment from "moment";
 import { getInventoryRecords } from "../../redux/features/donar/getRecordAction";
+import { useNavigate } from "react-router-dom";
+import { clearRecordList } from "../../redux/features/admin/adminSlice";
 const HomePage = () => {
   const { record_data, loading, error } = useSelector((state) => state.records);
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getInventoryRecords());
+  }, [dispatch,navigate]);
+
+  // clear state after diaply the record
+  useEffect(() => {
+    return () => {
+      dispatch(clearRecordList());
+    };
   }, [dispatch]);
 
   const colNames = [
@@ -21,6 +32,7 @@ const HomePage = () => {
   ];
   return (
     <Layout>
+      {user?.role === "admin" && navigate("/admin")}
       {error && <span className="text-red-500">{alert(error)} </span>}
       {loading ? (
         <Spinner />

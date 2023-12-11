@@ -15,7 +15,24 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    // clear whoel state
+    clearState: (state) => {
+      state.loading = false;
+      state.user = null;
+      state.token = null;
+      state.error = null;
+    },
+    clearMessage: (state) => {
+      state.error = null;
+    },
+    clearUser: (state) => {
+      state.user = null;
+    },
+    clearToken: (state) => {
+      state.token = null;
+    },
+  },
   extraReducers: (builder) => {
     // login
     builder.addCase(userLogin.pending, (state) => {
@@ -62,4 +79,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { clearMessage, clearUser, clearToken,clearState } = authSlice.actions;
 export default authSlice;

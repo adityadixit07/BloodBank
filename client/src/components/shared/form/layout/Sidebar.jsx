@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdOutlineInventory } from "react-icons/md";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaCaretSquareDown, FaRegHospital } from "react-icons/fa";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
-  const location = useLocation();
+
   return (
     <div>
       <div className="sidebar">
