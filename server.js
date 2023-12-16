@@ -4,9 +4,10 @@ const cors = require("cors");
 const morgan = require("morgan");
 const db = require("./config/db");
 dotenv.config({ path: "./config/config.env" });
+const path=require('path')
+
 const app = express();
 db();
-// https://github.com/Angeluz-07/MRI-preprocessing-techniques/blob/main/notebooks/04_templates_and_masks.ipynb
 app.use(cors());
 app.use(cors({ origin: "*" }));
 app.use(express.json());
@@ -24,6 +25,20 @@ app.use("/api/v1/inventory", require("./routes/inventoryRoutes"));
 app.use("/api/v1/analytics", require("./routes/analyticRoutes"));
 // admin routes
 app.use("/api/v1/admin", require("./routes/adminRoutes"));
+
+
+
+// severing static folders
+app.use(express.static(path.join(__dirname, './client/build')))
+app.get("*",(req,res)=>{
+  res.sendFile(path.join(__dirname, './client/build/index.html'))
+})
+
+
+app.get('/', (req, res) => {
+  res.send(`<h1>Welcome to the backend server of blood bank</h1>`);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
