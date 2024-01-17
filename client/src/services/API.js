@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL:"https://bloodinventoryapp.onrender.com/api/v1"});
+const API = axios.create({ baseURL:"/api/v1"});
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
